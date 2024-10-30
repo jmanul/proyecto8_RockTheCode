@@ -5,9 +5,9 @@ const mongoose = require('mongoose');
 const bandSchema = new mongoose.Schema({
 
      name: { type: String, required: true },
-     image: { type: String, required: true },
-     leader: { type: Schema.Types.ObjectId, ref: 'leaders' , required: true},
-     style: { type: Schema.Types.ObjectId, ref: 'styles', required: true },
+     image: { type: String, required: false },
+     leader: { type: mongoose.Types.ObjectId, ref: 'leaders', required: false, trim: true },
+     style: { type: mongoose.Types.ObjectId, ref: 'styles', required: false, trim: true },
 },
      
      {

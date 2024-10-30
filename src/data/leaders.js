@@ -2,44 +2,37 @@
 
 const leaders = [
      {
-          name: "Robert Plant",
-          image: "URL_de_Imagen_RobertPlant"
+          name: "Robert Plant"
      },
      {
-          name: "John Lennon",
-          image: "URL_de_Imagen_JohnLennon"
+          name: "John Lennon"
+          
      },
      {
-          name: "Roger Waters",
-          image: "URL_de_Imagen_RogerWaters"
+          name: "Roger Waters"
+          
      },
      {
-          name: "Mick Jagger",
-          image: "URL_de_Imagen_MickJagger"
+          name: "Mick Jagger"
+          
      },
      {
-          name: "Freddie Mercury",
-          image: "URL_de_Imagen_FreddieMercury"
+          name: "Freddie Mercury"
      },
      {
-          name: "Axl Rose",
-          image: "URL_de_Imagen_AxlRose"
+          name: "Axl Rose"
      },
      {
-          name: "Kurt Cobain",
-          image: "URL_de_Imagen_KurtCobain"
+          name: "Kurt Cobain"
      },
      {
-          name: "Jim Morrison",
-          image: "URL_de_Imagen_JimMorrison"
+          name: "Jim Morrison"
      },
      {
-          name: "Brian Johnson",
-          image: "URL_de_Imagen_BrianJohnson"
+          name: "Brian Johnson"
      },
      {
-          name: "James Hetfield",
-          image: "URL_de_Imagen_JamesHetfield"
+          name: "James Hetfield"
      },
 ];
 

@@ -4,50 +4,42 @@ const bands = [
      {
           name: "Led Zeppelin",
           leader: "Robert Plant",
-          style: "Hard Rock",
-          image: "URL_de_Imagen_LedZeppelin"
+          style: "Hard Rock"
      },
      {
           name: "The Beatles",
           leader: "John Lennon",
-          style: "Rock Pop",
-          image: "URL_de_Imagen_TheBeatles"
+          style: "Rock Pop"
      },
      {
           name: "Pink Floyd",
           leader: "Roger Waters",
-          style: "Psychedelic Rock",
-          image: "URL_de_Imagen_PinkFloyd"
+          style: "Psychedelic Rock"
      },
      {
           name: "The Rolling Stones",
           leader: "Mick Jagger",
-          style: "Rock Blues",
-          image: "URL_de_Imagen_TheRollingStones"
+          style: "Rock Blues"
      },
      {
           name: "Queen",
           leader: "Freddie Mercury",
-          style: "Rock Opera",
-          image: "URL_de_Imagen_Queen"
+          style: "Rock Opera"
      },
      {
           name: "Guns N' Roses",
           leader: "Axl Rose",
-          style: "Hard Rock",
-          image: "URL_de_Imagen_GunsNRoses"
+          style: "Hard Rock"
      },
      {
           name: "Nirvana",
           leader: "Kurt Cobain",
-          style: "Grunge",
-          image: "URL_de_Imagen_Nirvana"
+          style: "Grunge"
      },
      {
           name: "The Doors",
           leader: "Jim Morrison",
-          style: "Psychedelic Rock",
-          image: "URL_de_Imagen_TheDoors"
+          style: "Psychedelic Rock"
      },
      {
           name: "AC/DC",
@@ -58,8 +50,7 @@ const bands = [
      {
           name: "Metallica",
           leader: "James Hetfield",
-          style: "Heavy Metal",
-          image: "URL_de_Imagen_Metallica"
+          style: "Heavy Metal"
      },
 ];
 
