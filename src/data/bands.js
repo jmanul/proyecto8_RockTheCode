@@ -44,8 +44,8 @@ const bands = [
      {
           name: "AC/DC",
           leader: "Brian Johnson",
-          style: "Rock N' Roll",
-          image: "URL_de_Imagen_ACDC"
+          style: "Rock N' Roll"
+      
      },
      {
           name: "Metallica",

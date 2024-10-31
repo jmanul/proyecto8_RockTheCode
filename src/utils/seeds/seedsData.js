@@ -5,24 +5,23 @@ const seedBands = require('./seedBands');
 
 
 const seedData = async () => {
+
      try {
-       
+
           await mongoose.connect(process.env.DDBB_URL);
-          console.log('Conectado a la base de datos.');
+          console.log('Conectado a la base de datos');
 
           await seedBands();
+          console.log('Seeding completado');
 
-          console.log('Seeding completado.');
+          await mongoose.disconnect();
+          console.log('Conexión cerrada');
 
      } catch (error) {
 
-          console.error('Error en el seeding:', error);
+          console.error('Error en el seeding', error);
 
-     } finally {
-
-          await mongoose.disconnect();
-          console.log('Conexión cerrada.');
-     }
+     } 
 };
 
 seedData();

@@ -5,7 +5,8 @@ const leaderSchema = new mongoose.Schema({
 
      name: { type: String, required: true, trim: true },
      image: { type: String, required: false}, 
-     bands: [{ type: mongoose.Types.ObjectId, ref: 'bands', required: false}]
+     bandsId: [{ type: mongoose.Types.ObjectId, ref: 'bands', required: false }],
+     isVerified: { type: Boolean, default: false }
 },
 
      {
