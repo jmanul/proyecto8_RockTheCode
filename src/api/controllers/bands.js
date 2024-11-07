@@ -46,7 +46,7 @@ const getVerifiedBands = async (req, res, next) => {
 
      } catch (error) {
 
-          res.status(500).json({ error: 'Error al obtener bandas verificadas', details: error.message });
+          res.status(500).json({ error: 'Error al obtener las bandas verificadas', details: error.message });
      }
 };
 
@@ -56,8 +56,6 @@ const postBand = async (req, res, next) => {
      try {
           const { name, image, leaderId, leaderName, styleId, styleName } = req.body;
 
-          // Verifica si ya existe una banda con el mismo nombre
-
           const existingBand = await Band.findOne({ name });
 
           if (existingBand) {
@@ -65,7 +63,7 @@ const postBand = async (req, res, next) => {
                return res.status(400).json({ error: 'La banda ya existe' });
           }
 
-          // 1. crea un nuevo leader con leaderName si aun no existe leaderId
+          // si enviamos leaderName  y no leaderId, busca un lider por su nombre o crea un nuevo lider con leaderName si no existe
 
           let leader;
 
@@ -86,13 +84,17 @@ const postBand = async (req, res, next) => {
                return res.status(404).json({ error: 'Líder no encontrado' });
           }
 
-          // 2. crea un nuevo style con styleName si aun no existe styleId
+          //   si enviamos styleName en lugar de styleId buscara el stilo por el nombre y si no existe lo creara 
 
           let style;
 
           if (!styleId && styleName) {
 
-               style = await Style.create({ name: styleName, bandsId: [], leadersId: [] });
+               style = await Style.findOneAndUpdate(
+                    { name: styleName },
+                    { name: styleName },
+                    { new: true, upsert: true }
+               );
 
           } else {
 
@@ -111,7 +113,7 @@ const postBand = async (req, res, next) => {
                styleId: style._id
           });
 
-          // 4. actualiza leader y style para evitar duplicados
+          // actualizamos los arrays del lider y el estilo, añadiendoles si no existen ya en la lista 
 
           await Leader.findByIdAndUpdate(
                leader._id,
@@ -130,8 +132,8 @@ const postBand = async (req, res, next) => {
 
 
           const populatedBand = await Band.findById(newBand._id)
-               .populate('leader', 'name')
-               .populate('style', 'name description');
+               .populate('leaderId', 'name')
+               .populate('styleId', 'name description');
 
           res.status(201).json({
                message: 'banda añadida',
@@ -155,6 +157,8 @@ const putBand = async (req, res, next) => {
           if (!band) {
                return res.status(404).json({ message: 'Banda no encontrada' });
           }
+
+          // TODO: añadir codigo para subir image
 
           band.name = name || band.name;
           band.image = image || band.image;
@@ -182,7 +186,11 @@ const putBand = async (req, res, next) => {
 
           if (!styleId && styleName) {
 
-               style = await Style.create({ name: styleName, bandsId: [], leadersId: [] });
+               style = await Style.findOneAndUpdate(
+                    { name: styleName },
+                    { name: styleName },
+                    { new: true, upsert: true }
+               );
 
           } else {
 
@@ -202,22 +210,22 @@ const putBand = async (req, res, next) => {
 
           await Leader.findByIdAndUpdate(
                leader._id,
-               { $addToSet: { bandsId: newBand._id } }
+               { $addToSet: { bandsId: band._id } }
           );
 
           await Style.findByIdAndUpdate(
                style._id,
                {
                     $addToSet: {
-                         bandsId: newBand._id,
+                         bandsId: band._id,
                          leadersId: leader._id
                     }
                }
           );
 
           const populatedBand = await Band.findById(band._id)
-               .populate('leader', 'name image')
-               .populate('rockStyle', 'name description');
+               .populate('leaderId', 'name image')
+               .populate('styleId', 'name description');
 
           res.status(200).json(populatedBand);
 
@@ -241,12 +249,20 @@ const deleteBand = async (req, res, next) => {
 
           await Band.findByIdAndDelete(id);
 
+          // buscamos el lider de la banda por el id y actualizamos su array de bandas, eliminando la referencia a la banda
+
           if (band.leaderId) {
-               await Leader.findByIdAndUpdate(band.leaderId, { $pull: { bands: id } });
+               await Leader.findByIdAndUpdate(band.leaderId, { $pull: { bandsId: id } });
           }
 
+          // buscamos el estilo de la banda por el id y actualizamos su array de bandas y el de líderes, eliminando las referencias de cada uno a la banda
+
           if (band.styleId) {
-               await Style.findByIdAndUpdate(band.styleId, { $pull: { bands: id } });
+               await Style.findByIdAndUpdate(band.styleId, {
+                    $pull: {
+                         bandsId: id,
+                         leadersId: band.leaderId
+                } });
           }
 
 
@@ -263,10 +279,10 @@ const deleteBand = async (req, res, next) => {
 
 module.exports = {
 
-     postBand,
      getBands,
      getbandById,
      getVerifiedBands,
+     postBand,
      putBand,
      deleteBand
 };
