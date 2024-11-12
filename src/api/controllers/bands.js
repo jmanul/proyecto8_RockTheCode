@@ -54,20 +54,20 @@ const getVerifiedBands = async (req, res, next) => {
 const postBand = async (req, res, next) => {
 
      try {
-          const { name, image, leaderId, leaderName, styleId, styleName } = req.body;
+          const { name, image, leaderId, leaderName, styleId, styleName, ...rest } = req.body;
 
           const existingBand = await Band.findOne({ name });
 
           if (existingBand) {
 
-               return res.status(400).json({ error: 'La banda ya existe' });
+               return res.status(400).json({ error: `La banda ${name} ya existe` });
           }
 
           // si enviamos leaderName  y no leaderId, busca un lider por su nombre o crea un nuevo lider con leaderName si no existe
 
           let leader;
 
-          if (!leaderId && leaderName) {
+          if (leaderName) {
 
                leader = await Leader.findOneAndUpdate(
                     { name: leaderName },
@@ -75,20 +75,21 @@ const postBand = async (req, res, next) => {
                     { new: true, upsert: true }
                );
 
-          } else {
+          } else if (leaderId) {
 
                leader = await Leader.findById(leaderId);
           }
 
           if (!leader) {
-               return res.status(404).json({ error: 'Líder no encontrado' });
+              
+               return res.status(404).json({ error: 'Líder necesario' });
           }
 
           //   si enviamos styleName en lugar de styleId buscara el stilo por el nombre y si no existe lo creara 
 
           let style;
 
-          if (!styleId && styleName) {
+          if (styleName) {
 
                style = await Style.findOneAndUpdate(
                     { name: styleName },
@@ -96,21 +97,25 @@ const postBand = async (req, res, next) => {
                     { new: true, upsert: true }
                );
 
-          } else {
+          } else if (styleId) {
 
                style = await Style.findById(styleId);
           }
 
           if (!style) {
-               return res.status(404).json({ error: 'Estilo no encontrado' });
+             
+               return res.status(404).json({ error: 'Estilo necesario' });
           }
+
 
           const newBand = await Band.create({
 
                name,
                image,
                leaderId: leader._id,
-               styleId: style._id
+               styleId: style._id,
+               ...rest
+               
           });
 
           // actualizamos los arrays del lider y el estilo, añadiendoles si no existen ya en la lista 
@@ -150,7 +155,7 @@ const putBand = async (req, res, next) => {
 
      try {
           const { id } = req.params;
-          const { name, image, leaderId, leaderName, styleId, styleName, isVerified } = req.body;
+          const { name, image, leaderId, leaderName, styleId, styleName, ...rest } = req.body;
 
           const band = await Band.findById(id);
 
@@ -158,14 +163,20 @@ const putBand = async (req, res, next) => {
                return res.status(404).json({ message: 'Banda no encontrada' });
           }
 
+          const existingBandName = await Band.findOne({ name });
+
+          if (existingBandName) {
+               return res.status(409).json({ error: `${name} ya existe` });
+          }
+
           // TODO: añadir codigo para subir image
 
           band.name = name || band.name;
           band.image = image || band.image;
 
-          let leader;
+          let leader = band.leaderId;
 
-          if (!leaderId && leaderName) {
+          if (leaderName) {
 
                leader = await Leader.findOneAndUpdate(
                     { name: leaderName },
@@ -173,18 +184,14 @@ const putBand = async (req, res, next) => {
                     { new: true, upsert: true }
                );
 
-          } else {
+          } else if (leaderId) {
 
                leader = await Leader.findById(leaderId);
           }
 
-          if (!leader) {
-               return res.status(404).json({ error: 'Líder no encontrado' });
-          }
+          let style = band.styleId;
 
-          let style;
-
-          if (!styleId && styleName) {
+          if (styleName) {
 
                style = await Style.findOneAndUpdate(
                     { name: styleName },
@@ -192,20 +199,16 @@ const putBand = async (req, res, next) => {
                     { new: true, upsert: true }
                );
 
-          } else {
+          } else if (styleId){
 
                style = await Style.findById(styleId);
           }
 
-          if (!style) {
-               return res.status(404).json({ error: 'Estilo no encontrado' });
-          }
 
+          band.styleId = style;
+          band.leaderId = leader; 
 
-          if (typeof isVerified === 'boolean') {
-               band.isVerified = isVerified;
-          }
-
+          Object.assign(band, rest);
           await band.save();
 
           await Leader.findByIdAndUpdate(
