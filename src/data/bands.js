@@ -3,56 +3,56 @@
 const bands = [
      {
           name: "Led Zeppelin",
-          leaderId: "Robert Plant",
+          leadersId: ["Robert Plant"],
           styleId: "Hard Rock"
      },
      {
           name: "The Beatles",
-          leaderId: "John Lennon",
+          leadersId: ["John Lennon"],
           styleId: "Rock Pop"
      },
      {
           name: "Pink Floyd",
-          leaderId: "Roger Waters",
+          leadersId: ["Roger Waters"],
           styleId: "Psychedelic Rock"
      },
      {
           name: "The Rolling Stones",
-          leaderId: "Mick Jagger",
+          leadersId: ["Mick Jagger"],
           styleId: "Rock Blues"
      },
      {
           name: "Queen",
-          leaderId: "Freddie Mercury",
+          leadersId: ["Freddie Mercury"],
           styleId: "Rock Opera"
      },
      {
           name: "Guns N' Roses",
-          leaderId: "Axl Rose",
+          leadersId: ["Axl Rose"],
           styleId: "Hard Rock"
      },
      {
           name: "Nirvana",
-          leaderId: "Kurt Cobain",
+          leadersId: ["Kurt Cobain"],
           styleId: "Grunge"
      },
      {
           name: "The Doors",
-          leaderId: "Jim Morrison",
+          leadersId: ["Jim Morrison"],
           styleId: "Psychedelic Rock"
      },
      {
           name: "AC/DC",
-          leaderId: "Brian Johnson",
+          leadersId: ["Brian Johnson"],
           styleId: "Rock N' Roll"
-      
      },
      {
           name: "Metallica",
-          leaderId: "James Hetfield",
+          leadersId: ["James Hetfield"],
           styleId: "Heavy Metal"
      },
 ];
+
 
 
 module.exports = bands

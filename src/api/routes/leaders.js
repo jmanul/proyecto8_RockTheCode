@@ -1,14 +1,14 @@
 
-const { getLeaders, getLeaderById, postLeader, putLeader } = require('../controllers/leaders');
+const { getLeaders, getVerifiedLeaders, getLeaderById, postLeader, putLeader, deleteLeader } = require('../controllers/leaders');
 
 
 const leadersRouter = require('express').Router();
 
 leadersRouter.get('/id/:id', getLeaderById);
-//leadersRouter.get('/isVerified/:id');
+leadersRouter.get('/verified/', getVerifiedLeaders);
 leadersRouter.get('/', getLeaders);
 leadersRouter.post('/', postLeader);
 leadersRouter.put('/:id', putLeader);
-//leadersRouter.delete('/:id');
+leadersRouter.delete('/:id', deleteLeader);
 
 module.exports = leadersRouter;

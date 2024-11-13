@@ -23,12 +23,12 @@ const seedBands = async () => {
 
           for (let band of bandsData) {
 
-               const leader = leaders.find(l => l.name === band.leaderId);
+               const leaderIds = leaders.filter(l => band.leadersId.includes(l.name)).map(l => l._id);
           
                const style = styles.find(s => s.name === band.styleId);
 
-               if (leader && style) {
-                    band.leaderId = leader._id;
+               if (leaderIds && style) {
+                    band.leadersId = leaderIds;
                     band.styleId = style._id;
                }
           }

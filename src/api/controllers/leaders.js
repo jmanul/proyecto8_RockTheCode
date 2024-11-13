@@ -35,6 +35,20 @@ const getLeaderById = async (req, res, next) => {
      }
 };
 
+const getVerifiedLeaders = async (req, res, next) => {
+
+     try {
+
+          const verifiedLeaders = await Leader.find({ isVerified: true });
+
+          res.status(200).json(verifiedBands);
+
+     } catch (error) {
+
+          res.status(500).json({ error: 'Error al obtener las bandas verificadas', details: error.message });
+     }
+};
+
 const postLeader = async (req, res, next) => {
 
      try {
@@ -115,13 +129,42 @@ const putLeader = async (req, res, next) => {
      }
 };
 
+const deleteLeader = async (req, res, next) => {
+
+     try {
+          const { id } = req.params;
+
+          const leader = await Leader.findById(id);
+
+          if (!leader) {
+               return res.status(404).json({ message: 'Lider no encontrada' });
+          }
+
+          await Leader.findByIdAndDelete(id);
+
+          if (leader.bandsId) {
+               await Band.updateMany({ leadersId: id }, { $pull: { leadersId: id } });
+          }
+
+
+          res.status(200).json({ message: 'Lider eliminada correctamente', leader });
+
+     } catch (error) {
+
+          res.status(500).json({ error: 'Error al eliminar la banda', details: error.message });
+     }
+};
+
+
 
 
 
 module.exports = {
 
      getLeaders,
+     getVerifiedLeaders,
      getLeaderById,
      postLeader,
-     putLeader
+     putLeader,
+     deleteLeader
 };

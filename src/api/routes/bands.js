@@ -5,7 +5,7 @@ const { postBand, getBands, getbandById, getVerifiedBands, putBand, deleteBand }
 const bandsRouter = require('express').Router();
 
 bandsRouter.get('/id/:id', getbandById);
-bandsRouter.get('/isVerified/:id', getVerifiedBands);
+bandsRouter.get('/verified/', getVerifiedBands);
 bandsRouter.get('/', getBands);
 bandsRouter.post('/', postBand);
 bandsRouter.put('/:id', putBand);
