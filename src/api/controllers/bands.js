@@ -67,7 +67,7 @@ const postBand = async (req, res, next) => {
           const leadersArray = [];
 
           if (leaderNames.length > 0) {
-              
+
                for (let leaderName of leaderNames) {
                     const leader = await Leader.findOneAndUpdate(
                          { name: leaderName },
@@ -77,7 +77,7 @@ const postBand = async (req, res, next) => {
                     leadersArray.push(leader._id);
                }
           } else if (leadersId.length > 0) {
-         
+
                for (let leaderId of leadersId) {
 
                     const leader = await Leader.findById(leaderId);
@@ -89,7 +89,7 @@ const postBand = async (req, res, next) => {
                }
           }
 
-     
+
           if (leadersArray.length === 0) {
                return res.status(404).json({ error: 'Se requiere al menos un lider' });
           }
@@ -112,12 +112,12 @@ const postBand = async (req, res, next) => {
                return res.status(404).json({ error: 'Estilo necesario' });
           }
 
-        
+
           const newBand = await Band.create({
                name,
                image,
                styleId: style._id,
-               leadersId: leadersArray,  
+               leadersId: leadersArray,
                isVerified: false,
                ...rest
           });
@@ -133,8 +133,7 @@ const postBand = async (req, res, next) => {
                style._id,
                {
                     $addToSet: {
-                         bandsId: newBand._id,
-                         leadersId: { $each: leadersArray } 
+                         bandsId: newBand._id
                     }
                }
           );
@@ -206,15 +205,13 @@ const putBand = async (req, res, next) => {
                style = await Style.findById(styleId);
           }
 
-
           band.styleId = style;
-          // band.leaderId = leader; 
-
+        
           await Band.findByIdAndUpdate(
                id,
                {
                     $addToSet: {
-                         leadersId: leader
+                         leadersId: leader._id
                     }
                }
           );
@@ -229,13 +226,7 @@ const putBand = async (req, res, next) => {
 
           await Style.findByIdAndUpdate(
                style._id,
-               {
-                    $addToSet: {
-                         bandsId: band._id,
-                         leadersId: leader._id
-                    }
-               }
-          );
+               { $addToSet: { bandsId: band._id } });
 
           const populatedBand = await Band.findById(band._id)
                .populate('leadersId', 'name image')
@@ -260,26 +251,24 @@ const deleteBand = async (req, res, next) => {
                return res.status(404).json({ message: 'Banda no encontrada' });
           }
 
-
           await Band.findByIdAndDelete(id);
 
-          // buscamos el lider de la banda por el id y actualizamos su array de bandas, eliminando la referencia a la banda
+          // buscamos los lideres de la banda por el id y actualizamos su array de bandas, eliminando la referencia a la banda en cada uno de ellos
 
-          if (band.leadersId) {
-               await Leader.updateMany({bandsId : id}, { $pull: { bandsId: id } });
-          }
+          await Leader.updateMany({ bandsId: id }, { $pull: { bandsId: id } });
 
-          // buscamos el estilo de la banda por el id y actualizamos su array de bandas y el de líderes, eliminando las referencias de cada uno a la banda
+          // buscamos el estilo de la banda por el id y actualizamos su array de bandas eliminando la referencia a la banda, en el de líderes eliminamos todas la referencias a los lideres de la banda
 
-          if (band.styleId) {
-               await Style.findByIdAndUpdate(band.styleId, {
-                    $pull: {
-                         bandsId: id,
-                         leadersId: band.leadersId //todo: hacer lo mismompara los lideres de styles
-                    }
-               });
-          }
+          await Style.findByIdAndUpdate(band.styleId, {
+               $pull: {
 
+                    bandsId: id,
+               },
+               $pullAll: {
+
+                    leadersId: band.leadersId
+               }
+          });
 
           res.status(200).json({ message: 'Banda eliminada correctamente', band });
 

@@ -5,6 +5,7 @@ const { conectDDBB } = require('./src/config/db');
 
 const bandsRouter = require('./src/api/routes/bands');
 const leadersRouter = require('./src/api/routes/leaders');
+const stylesRouter = require('./src/api/routes/styles');
 
 
 const app = express();
@@ -15,6 +16,7 @@ conectDDBB();
 
 app.use('/api/v1/bands', bandsRouter);
 app.use('/api/v1/leaders', leadersRouter);
+app.use('/api/v1/leaders', stylesRouter);
                          
 
 app.use('*', (req, res, next) => {

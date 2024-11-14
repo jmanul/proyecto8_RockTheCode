@@ -1,7 +1,7 @@
 
 const Band = require('../models/bands');
 const Leader = require('../models/leaders');
-const Style = require('../models/styles');
+
 
 
 const getLeaders = async (req, res, next) => {
@@ -52,7 +52,7 @@ const getVerifiedLeaders = async (req, res, next) => {
 const postLeader = async (req, res, next) => {
 
      try {
-          const { name, image, bandsId , ...rest} = req.body;
+          const { name, image, bandsId, ...rest } = req.body;
 
           let existingLeader = await Leader.findOne({ name });
 
@@ -64,12 +64,11 @@ const postLeader = async (req, res, next) => {
           // TODO: imagen el leader
 
           const validBands = await Band.find({ _id: { $in: bandsId } });
-          const validBandsId = validBands.map(band => band._id.toString());
-
+      
           const newLeader = await Leader.create({
                name,
                image,
-               bandsId: [...new Set(validBandsId)],
+               bandsId: [...new Set(validBands.map(band => band._id))],
                ...rest
           });
 
@@ -101,18 +100,21 @@ const putLeader = async (req, res, next) => {
                return res.status(409).json({ error: `${name} ya existe` });
           }
 
-          const validBands = await Band.find({ _id: { $in: bandsId } });
+          const validBands = await Band.find({ id: { $in: bandsId } });
 
           leader.name = name || leader.name;
           leader.image = image || leader.image;
           Object.assign(leader, rest);
-      
+
           const updatedLeader = await leader.save();
+
           await Leader.findByIdAndUpdate(
                id,
                {
                     $addToSet: {
-                         bandsId: validBands
+
+                         bandsId: validBands.map(band => band._id)
+                      
                     }
                }
           );
@@ -142,10 +144,7 @@ const deleteLeader = async (req, res, next) => {
 
           await Leader.findByIdAndDelete(id);
 
-          if (leader.bandsId) {
-               await Band.updateMany({ leadersId: id }, { $pull: { leadersId: id } });
-          }
-
+          await Band.updateMany({ leadersId: id }, { $pull: { leadersId: id } });
 
           res.status(200).json({ message: 'Lider eliminada correctamente', leader });
 

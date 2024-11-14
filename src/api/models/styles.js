@@ -7,7 +7,6 @@ const stylesSchema = new mongoose.Schema({
      name: { type: String, required: true, unique: true, trim: true },
      description: { type: String, required: false }, 
      bandsId: [{ type: mongoose.Types.ObjectId, ref: 'bands', required: false}], 
-     leadersId: [{ type: mongoose.Types.ObjectId, ref: 'leaders', required: false }],
      isVerified: { type: Boolean, default: false }
 },
 
