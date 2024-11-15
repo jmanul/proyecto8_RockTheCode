@@ -1,7 +1,7 @@
 const Band = require('../models/bands');
 const Leader = require('../models/leaders');
 const Style = require('../models/styles');
-
+const cloudinary = require('cloudinary').v2;
 
 
 const getBands = async (req, res, next) => {
@@ -115,7 +115,7 @@ const postBand = async (req, res, next) => {
 
           const newBand = await Band.create({
                name,
-               image,
+               image: req.file.path,
                styleId: style._id,
                leadersId: leadersArray,
                isVerified: false,

@@ -51,7 +51,7 @@ const getVerifiedStyles = async (req, res, next) => {
 const postStyle = async (req, res, next) => {
 
      try {
-          const { name, leadersId, bandsId, ...rest } = req.body;
+          const { name, bandsId, ...rest } = req.body;
 
           let existingStyle = await Style.findOne({ name });
 
@@ -81,7 +81,7 @@ const putStyle = async (req, res, next) => {
 
      try {
           const { id } = req.params;
-          const { name, leadersId, bandsId, ...rest } = req.body;
+          const { name, bandsId, ...rest } = req.body;
 
           let style = await Style.findById(id);
           if (!style) {
@@ -97,7 +97,6 @@ const putStyle = async (req, res, next) => {
           const validBands = await Band.find({ _id: { $in: bandsId } });
          
           style.name = name || style.name;
-          style.description = description || style.description;
           
           Object.assign(style, rest);
 

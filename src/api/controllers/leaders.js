@@ -100,7 +100,7 @@ const putLeader = async (req, res, next) => {
                return res.status(409).json({ error: `${name} ya existe` });
           }
 
-          const validBands = await Band.find({ id: { $in: bandsId } });
+          const validBands = await Band.find({ _id: { $in: bandsId } });
 
           leader.name = name || leader.name;
           leader.image = image || leader.image;
