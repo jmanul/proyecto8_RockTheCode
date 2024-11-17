@@ -1,3 +1,4 @@
+const deleteCloudinaryImage = require('../../utils/deleteImage');
 const Band = require('../models/bands');
 const Leader = require('../models/leaders');
 const Style = require('../models/styles');
@@ -54,7 +55,7 @@ const getVerifiedBands = async (req, res, next) => {
 const postBand = async (req, res, next) => {
 
      try {
-          const { name, image, leadersId = [], leaderNames = [], styleId, styleName, ...rest } = req.body;
+          const { name, leadersId = [], leaderNames = [], styleId, styleName, ...rest } = req.body;
 
           const existingBand = await Band.findOne({ name });
 
@@ -112,10 +113,19 @@ const postBand = async (req, res, next) => {
                return res.status(404).json({ error: 'Estilo necesario' });
           }
 
+          // establece un valor para imagen en caso de no haber imagen y si la hay le asignamos el valor de file 
+
+          let image = null;
+          if (req.file) {
+
+               image = req.file.path;
+          }
+
+          console.log(req.file.filename); //? =folder/image sin la estension
 
           const newBand = await Band.create({
                name,
-               image: req.file.path,
+               image,
                styleId: style._id,
                leadersId: leadersArray,
                isVerified: false,
@@ -156,7 +166,7 @@ const putBand = async (req, res, next) => {
 
      try {
           const { id } = req.params;
-          const { name, image, leaderId, leaderName, styleId, styleName, ...rest } = req.body;
+          const { name, leaderId, leaderName, styleId, styleName, ...rest } = req.body;
 
           const band = await Band.findById(id);
 
@@ -170,10 +180,16 @@ const putBand = async (req, res, next) => {
                return res.status(409).json({ error: `${name} ya existe` });
           }
 
-          // TODO: añadir codigo para subir image
+          if (req.file) {
+               // elimina la imagen anterior si la hay
+               await deleteCloudinaryImage(band.image);
+
+               // actualiza la nueva imagen con su URL
+
+               band.image = req.file.path;
+          }
 
           band.name = name || band.name;
-          band.image = image || band.image;
 
           let leader = band.leadersId;
 
@@ -206,7 +222,7 @@ const putBand = async (req, res, next) => {
           }
 
           band.styleId = style;
-        
+
           await Band.findByIdAndUpdate(
                id,
                {
@@ -250,6 +266,9 @@ const deleteBand = async (req, res, next) => {
           if (!band) {
                return res.status(404).json({ message: 'Banda no encontrada' });
           }
+
+
+          await deleteCloudinaryImage(band.image);
 
           await Band.findByIdAndDelete(id);
 

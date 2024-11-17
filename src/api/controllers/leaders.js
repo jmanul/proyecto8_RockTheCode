@@ -52,7 +52,7 @@ const getVerifiedLeaders = async (req, res, next) => {
 const postLeader = async (req, res, next) => {
 
      try {
-          const { name, image, bandsId, ...rest } = req.body;
+          const { name, bandsId, ...rest } = req.body;
 
           let existingLeader = await Leader.findOne({ name });
 
@@ -61,7 +61,11 @@ const postLeader = async (req, res, next) => {
                return res.status(409).json({ error: `El líder ${name} ya existe` });
           }
 
-          // TODO: imagen el leader
+          let image = null;
+          if (req.file) {
+
+               image = req.file.path;
+          }
 
           const validBands = await Band.find({ _id: { $in: bandsId } });
       
@@ -102,8 +106,17 @@ const putLeader = async (req, res, next) => {
 
           const validBands = await Band.find({ _id: { $in: bandsId } });
 
+          if (req.file) {
+               // elimina la imagen anterior si la hay
+               await deleteCloudinaryImage(leader.image);
+
+               // actualiza la nueva imagen con su URL
+
+               leader.image = req.file.path;
+          }
+
           leader.name = name || leader.name;
-          leader.image = image || leader.image;
+     
           Object.assign(leader, rest);
 
           const updatedLeader = await leader.save();
@@ -141,6 +154,8 @@ const deleteLeader = async (req, res, next) => {
           if (!leader) {
                return res.status(404).json({ message: 'Lider no encontrada' });
           }
+
+          await deleteCloudinaryImage(leader.image);
 
           await Leader.findByIdAndDelete(id);
 
