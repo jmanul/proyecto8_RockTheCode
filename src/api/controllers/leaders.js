@@ -136,7 +136,10 @@ const putLeader = async (req, res, next) => {
                .populate('bandsId', 'name image');
 
 
-          res.status(200).json(populatedLeader);
+          res.status(200).json({
+               message: 'Líder actualizado',
+               populatedLeader
+          });
 
      } catch (error) {
 

@@ -248,7 +248,10 @@ const putBand = async (req, res, next) => {
                .populate('leadersId', 'name image')
                .populate('styleId', 'name description');
 
-          res.status(200).json(populatedBand);
+          res.status(200).json({
+               message: 'Banda actualizada',
+               populatedBand
+          });
 
      } catch (error) {
 

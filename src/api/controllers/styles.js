@@ -114,7 +114,10 @@ const putStyle = async (req, res, next) => {
           const populatedStyle = await Style.findById(updatedStyle._id)
                .populate('bandsId', 'name');
           
-          res.status(200).json(populatedStyle);
+          res.status(200).json({
+               message: 'Estilo actualizado',
+               populatedStyle
+          });
 
      } catch (error) {
 

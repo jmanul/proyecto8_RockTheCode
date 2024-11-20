@@ -9,7 +9,7 @@ const conectDDBB = async () => {
           
      } catch (error) {
 
-          console.log('Ha sido imposible conectar 🫣');
+          console.log('No ha sido imposible conectar 🫣');
           
      }
 };
