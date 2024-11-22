@@ -798,6 +798,3 @@ Además permite la subida de imágenes a **Cloudinary** para añadirlas a los pe
 }
 ```
 
-<div align="center">
-<img src="https://res.cloudinary.com/dn6utw1rl/image/upload/v1732266399/rock-bands-api_lyezpz.webp" alt="Cloudinary-logo" width="450" />
-</div>
