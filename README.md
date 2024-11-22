@@ -2,7 +2,7 @@
 # Proyecto 8 : API REST FILES de bandas rock 
 
 <div align="center">
-<img src="https://res.cloudinary.com/dn6utw1rl/image/upload/v1732077953/samples/Captura_desde_2024-11-20_05-45-12_c0n67z.png" alt="Cloudinary-logo" width="450" />
+<img src="https://res.cloudinary.com/dn6utw1rl/image/upload/v1732266418/rock-bands-api-desktop_q7lhnm.webp" alt="Cloudinary-logo" width="450" />
 </div>
 
 
@@ -797,3 +797,7 @@ Además permite la subida de imágenes a **Cloudinary** para añadirlas a los pe
 	}
 }
 ```
+
+<div align="center">
+<img src="https://res.cloudinary.com/dn6utw1rl/image/upload/v1732266399/rock-bands-api_lyezpz.webp" alt="Cloudinary-logo" width="450" />
+</div>
