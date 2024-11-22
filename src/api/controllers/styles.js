@@ -70,7 +70,7 @@ const postStyle = async (req, res, next) => {
 
           const populatedStyle = await Style.findById(newStyle._id).populate('bandsId', 'name');
 
-          res.status(200).json(populatedStyle);
+          res.status(200).json({ message: 'Estilo creado', populatedStyle });
 
      } catch (error) {
           res.status(500).json({ error: 'Error al crear el estilo', details: error.message });

@@ -1,4 +1,5 @@
 
+const deleteCloudinaryImage = require('../../utils/deleteImage');
 const Band = require('../models/bands');
 const Leader = require('../models/leaders');
 
@@ -41,7 +42,7 @@ const getVerifiedLeaders = async (req, res, next) => {
 
           const verifiedLeaders = await Leader.find({ isVerified: true });
 
-          res.status(200).json(verifiedBands);
+          res.status(200).json(verifiedLeaders);
 
      } catch (error) {
 
@@ -80,7 +81,10 @@ const postLeader = async (req, res, next) => {
                .populate('bandsId', 'name image');
 
 
-          res.status(200).json(populatedLeader);
+          res.status(200).json({
+               message: 'Líder creado',
+               populatedLeader
+          });
 
      } catch (error) {
           res.status(500).json({ error: 'Error al crear el líder', details: error.message });
@@ -164,7 +168,7 @@ const deleteLeader = async (req, res, next) => {
 
           await Band.updateMany({ leadersId: id }, { $pull: { leadersId: id } });
 
-          res.status(200).json({ message: 'Lider eliminada correctamente', leader });
+          res.status(200).json({ message: 'Lider eliminado correctamente', leader });
 
      } catch (error) {
 
