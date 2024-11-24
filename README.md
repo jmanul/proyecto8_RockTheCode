@@ -160,8 +160,8 @@ Además permite la subida de imágenes a **Cloudinary** para añadirlas a los pe
 ```json
 {
    "name": "Aerosmith",
-   "leadersId": ["5fdd1e8e6b86542d10c537fd", "5fdd1e8e6b86542d10c537fe"],
-   "styleName": "Rock clásico"
+   "leadersId": ["6743206fbd12fcfa9316aab5", "6743206fbd12fcfa9316aab6"],
+   "styleName": "Gland"
 }
 
 ```
@@ -173,9 +173,9 @@ Además permite la subida de imágenes a **Cloudinary** para añadirlas a los pe
 | Campo       | Value                      | Requerido | Descripción                                             |
 | ----------- | -------------------------- | --------- | ------------------------------------------------------- |
 | `name`      | `Aerosmith`                | Si        | Nombre de la banda.                                     |
-| `leadersId` | `5fdd1e8e6b86542d10c537fd` | Si        | ID de líder asociado (o envia un nombre `leaderNames`). |
-| `leadersId` | `5fdd1e8e6b86542d10c537fd` | Si        | ID de líder asociado (o envia un nombre `leaderNames`). |
-| `styleName` | `Rock clásico`             | Si        | Estilo de la banda (o envia un ID`styleId`).            |
+| `leadersId` | `6743206fbd12fcfa9316aab5` | Si        | ID de líder asociado (o envia un nombre `leaderNames`). |
+| `leadersId` | `6743206fbd12fcfa9316aab6` | Si        | ID de líder asociado (o envia un nombre `leaderNames`). |
+| `styleName` | `Gland`             | Si        | Estilo de la banda (o envia un ID`styleId`).            |
 | `image`     | `myImagen.jpg`             | No        | Imagen de la banda [`file`].                            |
 
 
@@ -185,26 +185,29 @@ Además permite la subida de imágenes a **Cloudinary** para añadirlas a los pe
 {
 	"message": "Banda añadida",
 	"populatedBand": {
-		"_id": "673a57ed002de29b84c41986",
-		"name": "Aerosmith",
-		"image": "https://res.cloudinary.com/dn6utw1rl/image/upload/v1731876842/grupos-Rock/ybf2rjskp68glslknijg.svg",
+		"image": {
+			"url": "https://res.cloudinary.com/dn6utw1rl/image/upload/v1732452462/grupos-Rock/olyvva1oq2h6td45ksed.webp",
+			"public_id": "grupos-Rock/olyvva1oq2h6td45ksed"
+		},
+		"_id": "6743206f4eb194fce79e4f54",
+		"name": "aerosmith",
 		"leadersId": [
 			{
-				"_id": "5fdd1e8e6b86542d10c537fd",
-				"name": "Esteven Tyler"
+				"_id": "6743206fbd12fcfa9316aab5",
+				"name": "Steven Tyler"
 			},
 			{
-				"_id": "5fdd1e8e6b86542d10c537fe",
+				"_id": "6743206fbd12fcfa9316aab6",
 				"name": "Joe Perry"
 			}
 		],
 		"styleId": {
-			"_id": "67367c92c5c618f8cab46560",
-			"name": "Rock clásico"
+			"_id": "6743206fbd12fcfa9316aab7",
+			"name": "Gland"
 		},
 		"isVerified": false,
-		"createdAt": "2024-11-17T20:54:05.849Z",
-		"updatedAt": "2024-11-17T20:54:05.849Z",
+		"createdAt": "2024-11-24T12:47:43.430Z",
+		"updatedAt": "2024-11-24T12:47:43.430Z",
 		"__v": 0
 	}
 }
@@ -229,7 +232,7 @@ Además permite la subida de imágenes a **Cloudinary** para añadirlas a los pe
 ```json
 {
   
-   "leaderId": ["67369d4f342931e0440e9baa"],
+   "leaderId": ["Joey Kramer"],
    "isVerified": "true"
 
 }
@@ -242,7 +245,7 @@ Además permite la subida de imágenes a **Cloudinary** para añadirlas a los pe
 
 | Campo        | Value                      | Requerido | Descripción                                   |
 | ------------ | -------------------------- | --------- | --------------------------------------------- |
-| `leaderId`   | `67369d4f342931e0440e9baa` | Si        | ID del líder asociado (o envia `leaderName`). |
+| `leaderName`   | `Joey Kramer` | Si        | Nombre del líder asociado (o envia `leaderId`). |
 | `isVerified` | `true`                     | No        | Esta verificada.                              |
 | `image`      | `myImage.jpg`              | No        | Imagen de la banda[`file`].                   |
 
@@ -253,30 +256,33 @@ Además permite la subida de imágenes a **Cloudinary** para añadirlas a los pe
 {
 	"message": "Banda actualizada",
 	"populatedBand": {
-		"_id": "673a57ed002de29b84c41986",
-		"name": "Aerosmith",
-		"image": "https://res.cloudinary.com/dn6utw1rl/image/upload/v1731876842/grupos-Rock/ybf2rjskp68glslknijg.svg",
+		"image": {
+			"url": "https://res.cloudinary.com/dn6utw1rl/image/upload/v1732452462/grupos-Rock/olyvva1oq2h6td45ksed.webp",
+			"public_id": "grupos-Rock/olyvva1oq2h6td45ksed"
+		},
+		"_id": "6743206f4eb194fce79e4f54",
+		"name": "aerosmith",
 		"leadersId": [
 			{
-				"_id": "5fdd1e8e6b86542d10c537fd",
-				"name": "Esteven Tyler"
+				"_id": "6743206fbd12fcfa9316aab5",
+				"name": "Steven Tyler"
 			},
 			{
-				"_id": "5fdd1e8e6b86542d10c537fe",
+				"_id": "6743206fbd12fcfa9316aab6",
 				"name": "Joe Perry"
 			},
 			{
-				"_id": "67369d4f342931e0440e9baa",
+				"_id": "67432251bd12fcfa9316aab8",
 				"name": "Joey Kramer"
 			}
 		],
 		"styleId": {
-			"_id": "67367c92c5c618f8cab46560",
-			"name": "Rock clásico"
+			"_id": "6743206fbd12fcfa9316aab7",
+			"name": "Gland"
 		},
-		"isVerified": true,
-		"createdAt": "2024-11-17T20:54:05.849Z",
-		"updatedAt": "2024-11-17T20:54:05.849Z",
+		"isVerified": false,
+		"createdAt": "2024-11-24T12:47:43.430Z",
+		"updatedAt": "2024-11-24T12:55:45.122Z",
 		"__v": 0
 	}
 }
@@ -433,7 +439,7 @@ Además permite la subida de imágenes a **Cloudinary** para añadirlas a los pe
 ```json
 {
   "name":"Robert Trujillo",
-	"bandsId":"673d6b4f707e591268d1c545",
+	"bandsId":"67431ee44f473bc7b1da7240",
 	"position":"Bassist",
 	"startDate":"2003"
 }
@@ -447,7 +453,7 @@ Además permite la subida de imágenes a **Cloudinary** para añadirlas a los pe
 | Campo       | Value                      | Requerido | Descripción                   |
 | ----------- | -------------------------- | --------- | ----------------------------- |
 | `name`      | `Robert Trujillo`          | Si        | Nombre del líder.             |
-| `bandsId`   | `673d6b4f707e591268d1c545` | No        | ID de la banda.               |
+| `bandsId`   | `67431ee44f473bc7b1da7240` | No        | ID de la banda.               |
 | `position`  | `Bassist`                  | No        | Puesto que ocupa en la banda. |
 | `startDate` | `2003`                     | No        | Año de inicio en la banda.    |
 | `image`     | `myImagen.jpg`             | No        | Imagen del líder [`file`].    |
@@ -459,21 +465,24 @@ Además permite la subida de imágenes a **Cloudinary** para añadirlas a los pe
 {
 	"message": "Líder creado",
 	"populatedLeader": {
-		"_id": "674017c3f53724cb7264cdaf",
+		"image": {
+			"url": "https://res.cloudinary.com/dn6utw1rl/image/upload/v1732453957/lideres-Rock/nstd7munvw6pdew084hs.jpg",
+			"public_id": "lideres-Rock/nstd7munvw6pdew084hs"
+		},
+		"_id": "674326459a6aaeaf3d1846ed",
 		"name": "Robert Trujillo",
 		"position": "Bassist",
 		"startDate": "2003-01-01T00:00:00.000Z",
 		"endDate": "actuality",
-		"image": null,
 		"bandsId": [
 			{
-				"_id": "673d6b4f707e591268d1c545",
+				"_id": "67431ee44f473bc7b1da7240",
 				"name": "Metallica"
 			}
 		],
 		"isVerified": false,
-		"createdAt": "2024-11-22T05:33:55.258Z",
-		"updatedAt": "2024-11-22T05:33:55.258Z",
+		"createdAt": "2024-11-24T13:12:37.637Z",
+		"updatedAt": "2024-11-24T13:12:37.637Z",
 		"__v": 0
 	}
 }
@@ -517,23 +526,26 @@ Además permite la subida de imágenes a **Cloudinary** para añadirlas a los pe
   
 ```json
 {
-"message": "Líder actualizado",
+	"message": "Líder actualizado",
 	"populatedLeader": {
-		"_id": "674017c3f53724cb7264cdaf",
-		"name": "robert Trujillo",
+		"image": {
+			"url": "https://res.cloudinary.com/dn6utw1rl/image/upload/v1732454543/lideres-Rock/yeckxcmiwcdgmfm7nldh.svg",
+			"public_id": "lideres-Rock/yeckxcmiwcdgmfm7nldh"
+		},
+		"_id": "674326459a6aaeaf3d1846ed",
+		"name": "Robert Trujillo",
 		"position": "Bassist",
 		"startDate": "2003-01-01T00:00:00.000Z",
 		"endDate": "actuality",
-		"image": "https://res.cloudinary.com/dn6utw1rl/image/upload/v1732253778/lideres-Rock/wtshdksiiirz1nku35iz.svg",
 		"bandsId": [
 			{
-				"_id": "673d6b4f707e591268d1c545",
+				"_id": "67431ee44f473bc7b1da7240",
 				"name": "Metallica"
 			}
 		],
 		"isVerified": true,
-		"createdAt": "2024-11-22T05:33:55.258Z",
-		"updatedAt": "2024-11-22T05:36:22.993Z",
+		"createdAt": "2024-11-24T13:12:37.637Z",
+		"updatedAt": "2024-11-24T13:12:37.637Z",
 		"__v": 0
 	}
 }
@@ -552,21 +564,23 @@ Además permite la subida de imágenes a **Cloudinary** para añadirlas a los pe
   
 ```json
 {
-
 	"message": "Lider eliminado correctamente",
 	"leader": {
-		"_id": "6740161d7564cfb213d5d563",
-		"name": "robert Trujillo",
+		"image": {
+			"url": "https://res.cloudinary.com/dn6utw1rl/image/upload/v1732453957/lideres-Rock/nstd7munvw6pdew084hs.jpg",
+			"public_id": "lideres-Rock/nstd7munvw6pdew084hs"
+		},
+		"_id": "674326459a6aaeaf3d1846ed",
+		"name": "Robert Trujillo",
 		"position": "Bassist",
 		"startDate": "2003-01-01T00:00:00.000Z",
 		"endDate": "actuality",
-		"image": null,
 		"bandsId": [
-			"673d6b4f707e591268d1c545"
+			"67431ee44f473bc7b1da7240"
 		],
 		"isVerified": false,
-		"createdAt": "2024-11-22T05:26:53.312Z",
-		"updatedAt": "2024-11-22T05:26:53.312Z",
+		"createdAt": "2024-11-24T13:12:37.637Z",
+		"updatedAt": "2024-11-24T13:12:37.637Z",
 		"__v": 0
 	}
 }

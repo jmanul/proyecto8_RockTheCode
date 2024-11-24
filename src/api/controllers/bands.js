@@ -118,10 +118,14 @@ const postBand = async (req, res, next) => {
           let image = null;
           if (req.file) {
 
-               image = req.file.path;
+               image = {
+
+                    url: req.file.path,
+                    public_id: req.file.filename  // filename = folder/image sin la estension
+               }
           }
 
-          console.log(req.file.filename); //? =folder/image sin la estension
+         
 
           const newBand = await Band.create({
                name,
@@ -181,12 +185,16 @@ const putBand = async (req, res, next) => {
           }
 
           if (req.file) {
+               
                // elimina la imagen anterior si la hay
                await deleteCloudinaryImage(band.image);
 
-               // actualiza la nueva imagen con su URL
+               // actualiza la nueva imagen con su URL y public_id
 
-               band.image = req.file.path;
+               band.image = {
+                    url : req.file.path,
+                    public_id : req.file.filename
+               }
           }
 
           band.name = name || band.name;

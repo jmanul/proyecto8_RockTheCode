@@ -18,7 +18,10 @@ const leaderSchema = new mongoose.Schema({
      },
      startDate: { type: Date, required: false},
      endDate: { type: String, default: "actuality" },
-     image: { type: String, required: false}, 
+     image: {
+          url: { type: String, required: false },
+          public_id: { type: String, required: false }
+     }, 
      bandsId: [{ type: mongoose.Types.ObjectId, ref: 'bands', required: false }],
      isVerified: { type: Boolean, default: false }
 },

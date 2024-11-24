@@ -65,7 +65,11 @@ const postLeader = async (req, res, next) => {
           let image = null;
           if (req.file) {
 
-               image = req.file.path;
+               image = {
+
+                    url: req.file.path,
+                    public_id : req.file.filename
+               }
           }
 
           const validBands = await Band.find({ _id: { $in: bandsId } });
@@ -95,7 +99,7 @@ const putLeader = async (req, res, next) => {
 
      try {
           const { id } = req.params;
-          const { name, image, bandsId, ...rest } = req.body;
+          const { name, bandsId, ...rest } = req.body;
 
           let leader = await Leader.findById(id);
           if (!leader) {
@@ -114,9 +118,12 @@ const putLeader = async (req, res, next) => {
                // elimina la imagen anterior si la hay
                await deleteCloudinaryImage(leader.image);
 
-               // actualiza la nueva imagen con su URL
-
-               leader.image = req.file.path;
+               // actualiza la nueva imagen con su URL y public_id (que guardaremos para poder eliminarla o actualizarla)
+               
+               leader.image = {
+                    url: req.file.path,
+                    public_id: req.file.filename
+               }
           }
 
           leader.name = name || leader.name;

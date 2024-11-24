@@ -30,5 +30,5 @@ const nameFolder = (req) => {
      if (route.includes('bands')) return 'grupos-Rock';
      if (route.includes('styles')) return 'estilos-Rock';
      if (route.includes('leaders')) return 'lideres-Rock';
-     return 'default-folder'; // Carpeta por defecto si no coincide ninguna
+     return 'rock-folder'; // carpeta por defecto si no coincide ninguna
 };
